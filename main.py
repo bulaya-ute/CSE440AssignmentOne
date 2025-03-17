@@ -1,4 +1,5 @@
 import os
+from typing import List, Tuple
 
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
 from kivy.graphics import Color, Line
@@ -38,7 +39,7 @@ class ChineseWallApp(MDApp):
             card.is_selected = False
         self.selected_cards.clear()
 
-    def toggle_card_selection(self, card):
+    def toggle_card_selection(self, card, validate_access=True):
         self.all_cards.add(card)
         card.is_selected = not card.is_selected  # Highlight as selected
 
@@ -47,18 +48,29 @@ class ChineseWallApp(MDApp):
         else:
             self.selected_cards.append(card)
 
-        print(len(self.selected_cards))
-
         if len(self.selected_cards) >= 2:
-            print(type(self.selected_cards[0]), type(self.selected_cards[1]))
-            if pair_exists(self.joins, (self.selected_cards[0], self.selected_cards[1])) or \
-                    self.selected_cards[0].role == self.selected_cards[1].role:
+            if self.selected_cards[0].role == self.selected_cards[1].role:
                 self.deselect_all_cards()
                 return
-            self.joins.append((self.selected_cards[0], self.selected_cards[1]))
-            self.draw_line()
 
-    def draw_line(self):
+            if self.selected_cards[1].role == "subject":
+                self.selected_cards.reverse()
+
+            if validate_access:
+                read_access, read_access_description = self.validate_access(self.selected_cards[0], self.selected_cards[1])
+                write_access, write_access_description = self.validate_write_access(self.selected_cards[0],
+                                                                                self.selected_cards[1])
+                self.update_info(self.background.ids.read_access_label, read_access, read_access_description,
+                                 self.background.ids.write_access_label, write_access, write_access_description)
+
+                if not read_access:
+                    return
+
+            if not pair_exists(self.joins, (self.selected_cards[0], self.selected_cards[1])):
+                self.joins.append((self.selected_cards[0], self.selected_cards[1]))
+                self.draw_line()
+
+    def draw_line(self, validate=False):
         card1, card2 = self.selected_cards
         with self.root.canvas:
             Color(0.0, 0.0, 0.0, 1)  # Grey color for the line
@@ -79,6 +91,62 @@ class ChineseWallApp(MDApp):
         for line in self.lines:
             self.root.canvas.remove(line)
         self.joins.clear()
+
+    def update_info(self,
+                    read_access_label, read_access: bool, read_access_desc: str,
+                    write_access_label, write_access: bool, write_access_desc: str):
+        if read_access:
+            read_access_label.text_color = "green"
+        else:
+            read_access_label.text_color = "red"
+        read_access_label.text = read_access_desc
+
+        if write_access:
+            write_access_label.text_color = "green"
+        else:
+            write_access_label.text_color = "red"
+        write_access_label.text = write_access_desc
+
+    def validate_access(
+            self,
+            subject: str,
+            target_dataset: Dataset
+    ) -> Tuple[bool, str]:
+        existing_pairs = [(subj.text, dataset) for subj, dataset in self.joins]
+
+        # Find all datasets the subject already has access to
+        accessed_datasets = [dataset for subj, dataset in existing_pairs if subj == subject]
+
+        # Collect all COIs the subject has access to
+        accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
+
+        # --- READ ACCESS CHECK ---
+        if len(accessed_cois) == 1 and target_dataset.conflict_of_interest in accessed_cois:
+            return True, "Read access granted: Subject has access only within this COI."
+
+        if len(accessed_cois) == 0:
+            return True, "Read access granted: Subject has no prior dataset access."
+
+        if target_dataset.conflict_of_interest in accessed_cois:
+            return True, "Read access granted: Subject already has access to this COI."
+
+        return False, "Read access denied: Accessing multiple COIs violates the Chinese Wall Model."
+
+    def validate_write_access(
+            self,
+            subject: str,
+            target_dataset: Dataset
+    ) -> Tuple[bool, str]:
+        existing_pairs = [(subj.text, dataset) for subj, dataset in self.joins]
+        accessed_datasets = [dataset for subj, dataset in existing_pairs if subj == subject]
+        accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
+
+        if target_dataset in accessed_datasets:
+            if len(accessed_cois) == 1:
+                return True, "Write access granted: Subject's access is confined to a single COI."
+            return False, "Write access denied: Subject has accessed multiple COIs."
+
+        return False, "Write access denied: Subject does not have read access to this dataset."
 
 
 if __name__ == "__main__":

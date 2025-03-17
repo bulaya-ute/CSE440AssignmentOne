@@ -55,6 +55,7 @@ class Subject(MDCard):
         super().__init__(*args, **kwargs)
         self.is_selected = False
 
+
     def on_is_selected(self, instance, value):
         if value:
             self._previous_color = self.color
@@ -65,6 +66,7 @@ class Subject(MDCard):
 
 class Dataset(Subject):
     role = StringProperty("Dataset")
+    conflict_of_interest = StringProperty()
 
 class BackgroundWidget(MDFloatLayout):
     pass

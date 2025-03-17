@@ -28,12 +28,15 @@
 
                 Dataset:
                     text: "Citibank"
+                    conflict_of_interest: "bank"
 
                 Dataset:
                     text: "Bank of America"
+                    conflict_of_interest: "bank"
 
                 Dataset:
                     text: "Bank of the West"
+                    conflict_of_interest: "bank"
 
 
             MDLabel:
@@ -43,30 +46,58 @@
 
                 Dataset:
                     text: "Shell"
+                    conflict_of_interest: "gasoline"
 
                 Dataset:
                     text: "Mobil"
+                    conflict_of_interest: "gasoline"
 
                 Dataset:
                     text: "Sunoco"
+                    conflict_of_interest: "gasoline"
 
                 Dataset:
                     text: "Texaco"
+                    conflict_of_interest: "gasoline"
 
             MDLabel:
 
         Row:
-            MDButton:
-                on_release: app.clear_lines()
+            MDBoxLayout:
+                orientation: "horizontal"
 
-                MDButtonText:
-                    text: "Clear Lines"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_size: True
 
-            MDButton:
-                on_release: app.deselect_all_cards()
+                    MDButton:
+                        on_release: app.clear_lines()
 
-                MDButtonText:
-                    text: "Deselect all cards"
+                        MDButtonText:
+                            text: "Clear Lines"
+
+                    MDButton:
+                        on_release: app.deselect_all_cards()
+
+                        MDButtonText:
+                            text: "Deselect all cards"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+
+                    MDLabel:
+                        id: read_access_label
+                        text: "Read:"
+                        size_hint_y: None
+                        height: "50dp"
+
+
+                    MDLabel:
+                        id: write_access_label
+                        text: "Read:"
+                        size_hint_y: None
+                        height: "50dp"
 
 
 <ConflictOfInterest>
