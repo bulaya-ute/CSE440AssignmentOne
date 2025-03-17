@@ -47,30 +47,24 @@ class Subject(MDCard):
     text = StringProperty()
     halign = StringProperty("center")
     is_selected = BooleanProperty(False)
-    color = ColorProperty([0.9, 0.9, 0.9, 1])
+    color = ColorProperty([0, 0, 0, 1])
     _previous_color = ColorProperty()
+    role = StringProperty("subject")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_selected = False
 
-    def select(self):
-        self.is_selected = True
-
-    def deselect(self):
-        self.is_selected = False
-
     def on_is_selected(self, instance, value):
-        print(f"Selected: {value}")
         if value:
             self._previous_color = self.color
-            self.color = (0, 0, 1, 0.5)
+            self.color = (1, 0, 0, 1)
         else:
             self.color = self._previous_color
 
 
 class Dataset(Subject):
-    pass
+    role = StringProperty("Dataset")
 
 class BackgroundWidget(MDFloatLayout):
     pass

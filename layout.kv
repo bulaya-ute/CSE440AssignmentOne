@@ -55,6 +55,19 @@
 
             MDLabel:
 
+        Row:
+            MDButton:
+                on_release: app.clear_lines()
+
+                MDButtonText:
+                    text: "Clear Lines"
+
+            MDButton:
+                on_release: app.deselect_all_cards()
+
+                MDButtonText:
+                    text: "Deselect all cards"
+
 
 <ConflictOfInterest>
     orientation: "vertical"
@@ -93,8 +106,9 @@
     MDLabel:
         text: root.text
         halign: root.halign
-        md_bg_color: root.color
         radius: root.radius
+        theme_text_color: "Custom"
+        text_color: root.color
 
 
 <Dataset@Subject>

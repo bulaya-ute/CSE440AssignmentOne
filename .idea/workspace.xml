@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8ab1cba-645f-4af6-a871-b03005cc4e66" name="Changes" comment="Adding functionality">
+    <list default="true" id="b8ab1cba-645f-4af6-a871-b03005cc4e66" name="Changes" comment="Progress, yeah yeah">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatasetRow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout.kv" beforeDir="false" afterPath="$PROJECT_DIR$/layout.kv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/layout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets/IndividualObjectRow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets/background_widget.kv" beforeDir="false" afterPath="$PROJECT_DIR$/layout.kv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets/background_widget.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets/row.kv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/widgets/row.py" beforeDir="false" afterPath="$PROJECT_DIR$/layout.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1742156457566</updated>
       <workItem from="1742156460942" duration="11630000" />
-      <workItem from="1742173086885" duration="5857000" />
+      <workItem from="1742173086885" duration="10003000" />
     </task>
     <task id="LOCAL-00001" summary="Adding functionality">
       <option name="closed" value="true" />
@@ -126,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742175015917</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Progress, yeah yeah">
+      <option name="closed" value="true" />
+      <created>1742179507174</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742179507174</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,9 +149,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding functionality" />
+    <MESSAGE value="Progress, yeah yeah" />
+    <option name="LAST_COMMIT_MESSAGE" value="Progress, yeah yeah" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CSE440AssignmentOne$main.coverage" NAME="main Coverage Results" MODIFIED="1742179122065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CSE440AssignmentOne$main.coverage" NAME="main Coverage Results" MODIFIED="1742183281544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
