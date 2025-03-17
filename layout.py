@@ -1,6 +1,7 @@
-from kivy.properties import ObjectProperty, StringProperty, ColorProperty
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivy.properties import ObjectProperty, StringProperty, ColorProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivymd.tools.hotreload.app import original_argv
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.label import MDLabel
@@ -29,7 +30,7 @@ class ConflictOfInterest(MDBoxLayout):
         self.title.text = value
 
     def add_widget(self, widget, *args, **kwargs):
-        if isinstance(widget, Entry):
+        if isinstance(widget, Dataset):
             self.instances.add_widget(widget)
             return
         widget.fbind('pos_hint', self._trigger_layout)
@@ -42,16 +43,34 @@ class Row(MDBoxLayout):
 
 
 
-class EntryGroup(MDBoxLayout):
-    belongs_to = ObjectProperty()
-
-    def add_widget(self, widget, *args, is_base=False, **kwargs):
-        widget.fbind('pos_hint', self._trigger_layout)
-        return super(BoxLayout, self).add_widget(widget, *args, **kwargs)
-
-
-class Entry(MDCard):
+class Subject(MDCard):
     text = StringProperty()
     halign = StringProperty("center")
-    md_bg_color = ColorProperty()
+    is_selected = BooleanProperty(False)
+    color = ColorProperty([0.9, 0.9, 0.9, 1])
+    _previous_color = ColorProperty()
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_selected = False
+
+    def select(self):
+        self.is_selected = True
+
+    def deselect(self):
+        self.is_selected = False
+
+    def on_is_selected(self, instance, value):
+        print(f"Selected: {value}")
+        if value:
+            self._previous_color = self.color
+            self.color = (0, 0, 1, 0.5)
+        else:
+            self.color = self._previous_color
+
+
+class Dataset(Subject):
+    pass
+
+class BackgroundWidget(MDFloatLayout):
+    pass

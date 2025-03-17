@@ -1,18 +1,21 @@
 <BackgroundWidget>
+    #on_touch_down: app.deselect_all_cards()
+
     MDBoxLayout:
         orientation: "vertical"
         spacing: "40dp"
         md_bg_color: app.theme_cls.surfaceColor
         padding: "20dp", "20dp"
+        id: "box_layout"
 
         Row:
             MDLabel:
 
-            Entry:
+            Subject:
                 text: "Alice"
             MDLabel:
 
-            Entry:
+            Subject:
                 text: "Bob"
             MDLabel:
 
@@ -23,13 +26,13 @@
             ConflictOfInterest:
                 label: "Bank"
 
-                Entry:
+                Dataset:
                     text: "Citibank"
 
-                Entry:
+                Dataset:
                     text: "Bank of America"
 
-                Entry:
+                Dataset:
                     text: "Bank of the West"
 
 
@@ -38,16 +41,16 @@
             ConflictOfInterest:
                 label: "Gasoline"
 
-                Entry:
+                Dataset:
                     text: "Shell"
 
-                Entry:
+                Dataset:
                     text: "Mobil"
 
-                Entry:
+                Dataset:
                     text: "Sunoco"
 
-                Entry:
+                Dataset:
                     text: "Texaco"
 
             MDLabel:
@@ -78,18 +81,24 @@
     radius: "10dp"
 
 
-<Entry>
+
+
+<Subject>
     halign: "center"
     radius: "10dp"
     size_hint: None, None
     size: "100dp", "100dp"
     pos_hint: {"center_x": 0.5}
-
+    on_release: app.toggle_card_selection(self)
     MDLabel:
         text: root.text
         halign: root.halign
-        md_bg_color: 0, 0, 0, 0.3
+        md_bg_color: root.color
         radius: root.radius
+
+
+<Dataset@Subject>
+
 
 <Title>:
     md_bg_color: 0, 0, 1, 0.2
