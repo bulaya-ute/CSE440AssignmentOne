@@ -1,7 +1,8 @@
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty, ColorProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.tools.hotreload.app import original_argv
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.card import MDCard
 from kivymd.uix.label import MDLabel
 
 
@@ -19,7 +20,7 @@ class ConflictOfInterest(MDBoxLayout):
         self.add_widget(self.title)
         self.instances = MDBoxLayout(
             orientation='horizontal',
-            adaptive_width=True,
+            adaptive_size=True,
             spacing="20dp"
         )
         self.add_widget(self.instances)
@@ -36,7 +37,9 @@ class ConflictOfInterest(MDBoxLayout):
 
 
 class Row(MDBoxLayout):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 
 
 class EntryGroup(MDBoxLayout):
@@ -47,5 +50,8 @@ class EntryGroup(MDBoxLayout):
         return super(BoxLayout, self).add_widget(widget, *args, **kwargs)
 
 
-class Entry(MDLabel):
-    pass
+class Entry(MDCard):
+    text = StringProperty()
+    halign = StringProperty("center")
+    md_bg_color = ColorProperty()
+

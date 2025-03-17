@@ -3,5 +3,5 @@ from kivymd.uix.floatlayout import MDFloatLayout
 from widgets.row import Row
 
 
-class BackgroundWidget(MDBoxLayout):
+class BackgroundWidget(MDFloatLayout):
     pass

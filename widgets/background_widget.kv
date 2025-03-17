@@ -1,51 +1,56 @@
 <BackgroundWidget>
-    orientation: "vertical"
-    spacing: "40dp"
-    md_bg_color: app.theme_cls.surfaceColor
-    padding: "20dp", "20dp"
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: "40dp"
+        md_bg_color: app.theme_cls.surfaceColor
+        padding: "20dp", "20dp"
 
-    Row:
-        Entry:
-            text: "Alice"
-
-        Entry:
-            text: "Bob"
-
-    Row:
-
-        MDLabel:
-
-        ConflictOfInterest:
-            label: "Bank"
+        Row:
+            MDLabel:
 
             Entry:
-                text: "Citibank"
+                text: "Alice"
+            MDLabel:
 
             Entry:
-                text: "Bank of America"
+                text: "Bob"
+            MDLabel:
 
-            Entry:
-                text: "Bank of the West"
+        Row:
+
+            MDLabel:
+
+            ConflictOfInterest:
+                label: "Bank"
+
+                Entry:
+                    text: "Citibank"
+
+                Entry:
+                    text: "Bank of America"
+
+                Entry:
+                    text: "Bank of the West"
 
 
-        MDLabel:
+            MDLabel:
 
-        ConflictOfInterest:
-            label: "Gasoline"
+            ConflictOfInterest:
+                label: "Gasoline"
 
-            Entry:
-                text: "Shell"
+                Entry:
+                    text: "Shell"
 
-            Entry:
-                text: "Mobil"
+                Entry:
+                    text: "Mobil"
 
-            Entry:
-                text: "Sunoco"
+                Entry:
+                    text: "Sunoco"
 
-            Entry:
-                text: "Texaco"
+                Entry:
+                    text: "Texaco"
 
-        MDLabel:
+            MDLabel:
 
 
 <ConflictOfInterest>
@@ -53,7 +58,14 @@
     padding: "20dp", "20dp"
     spacing: "20dp"
     # md_bg_color: 0.8, 0.8, 0.8, 0.5
-    adaptive_width: True
+    adaptive_size: True
+
+    canvas.before:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1  # Grey color
+        Line:
+            width: 1
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
 
 
 
@@ -62,31 +74,29 @@
     orientation: "horizontal"
     spacing: "20dp"
     padding: "20dp", "20dp"
-    md_bg_color: 0.0, 0.8, 0.8, 0.2
+    #md_bg_color: 0.0, 0.8, 0.8, 0.2
     radius: "10dp"
 
-
-<EntryGroup>
-    orientation: "horizontal"
-    spacing: "20dp"
-    padding: "20dp", "20dp"
-    md_bg_color: 0.8, 0.8, 0.8, 1
-    radius: "10dp"
-    adaptive_width: True
 
 <Entry>
-    md_bg_color: "green"
     halign: "center"
     radius: "10dp"
-    size_hint_x: None
-    width: "100dp"
+    size_hint: None, None
+    size: "100dp", "100dp"
     pos_hint: {"center_x": 0.5}
 
+    MDLabel:
+        text: root.text
+        halign: root.halign
+        md_bg_color: 0, 0, 0, 0.3
+        radius: root.radius
+
 <Title>:
-    md_bg_color: "purple"
+    md_bg_color: 0, 0, 1, 0.2
     halign: "center"
     radius: "10dp"
-    size_hint_x: None
-    width: "100dp"
+    size_hint: 1, None
+    #width: "100dp"
     pos_hint: {"center_x": 0.5}
+    height: "50dp"
 
