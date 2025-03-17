@@ -60,15 +60,18 @@ class ChineseWallApp(MDApp):
                 read_access, read_access_description = self.validate_access(self.selected_cards[0], self.selected_cards[1])
                 write_access, write_access_description = self.validate_write_access(self.selected_cards[0],
                                                                                 self.selected_cards[1])
-                self.update_info(self.background.ids.read_access_label, read_access, read_access_description,
-                                 self.background.ids.write_access_label, write_access, write_access_description)
+                self.update_info( read_access, read_access_description,
+                                 write_access, write_access_description)
 
                 if not read_access:
+                    self.deselect_all_cards()
                     return
 
             if not pair_exists(self.joins, (self.selected_cards[0], self.selected_cards[1])):
                 self.joins.append((self.selected_cards[0], self.selected_cards[1]))
                 self.draw_line()
+
+            self.deselect_all_cards()
 
     def draw_line(self, validate=False):
         card1, card2 = self.selected_cards
@@ -93,8 +96,13 @@ class ChineseWallApp(MDApp):
         self.joins.clear()
 
     def update_info(self,
-                    read_access_label, read_access: bool, read_access_desc: str,
-                    write_access_label, write_access: bool, write_access_desc: str):
+                    read_access: bool, read_access_desc: str,
+                    write_access: bool, write_access_desc: str):
+
+        read_access_label = self.background.ids.read_access_label
+        write_access_label = self.background.ids.write_access_label
+
+        print(f"- {read_access_desc}\n- {write_access_desc}\n")
         if read_access:
             read_access_label.text_color = "green"
         else:
@@ -107,15 +115,14 @@ class ChineseWallApp(MDApp):
             write_access_label.text_color = "red"
         write_access_label.text = write_access_desc
 
-    def validate_access(
-            self,
-            subject: str,
-            target_dataset: Dataset
+    def validate_access(self, subject: str, target_dataset: Dataset
     ) -> Tuple[bool, str]:
-        existing_pairs = [(subj.text, dataset) for subj, dataset in self.joins]
+        existing_pairs = [(subj, dataset) for subj, dataset in self.joins]
+        print(f"Existing pairs: {len(existing_pairs)}")
 
         # Find all datasets the subject already has access to
         accessed_datasets = [dataset for subj, dataset in existing_pairs if subj == subject]
+        print(f"accessed datasets: {len(accessed_datasets)}")
 
         # Collect all COIs the subject has access to
         accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
