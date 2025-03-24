@@ -145,16 +145,13 @@ class ChineseWallApp(MDApp):
         accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
 
         # --- READ ACCESS CHECK ---
-        if len(accessed_cois) == 1 and target_dataset.conflict_of_interest in accessed_cois:
-            return True, f"Read access granted: {subject.text} has access only within this COI."
-
         if len(accessed_cois) == 0:
             return True, f"Read access granted: {subject.text} has no prior dataset access."
 
         if target_dataset.conflict_of_interest in accessed_cois:
-            return True, f"Read access granted: {subject.text} already has access to this COI."
+            return False, f"Read access denied: {subject.text} already has access to this COI, and may leak information to a competitor"
 
-        return False, "Read access denied: Accessing multiple COIs violates the Chinese Wall Model."
+        return True, "Read access granted: Access to an unrelated dataset may be performed"
 
     def validate_write_access(
             self,
@@ -165,13 +162,18 @@ class ChineseWallApp(MDApp):
         accessed_datasets = self.get_accessed_datasets(subject)
         accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
 
-        print(f"target_dataset: {target_dataset.text}, accessed_datasets: {accessed_datasets}")
-        if target_dataset in accessed_datasets:
-            if len(accessed_cois) == 1:
-                return True, f"Write access granted: {subject.text}'s access is confined to a single COI."
-            return False, f"Write access denied: {subject.text} has accessed multiple COIs."
+        read_access = self.validate_access(subject, target_dataset)[0]
 
-        return False, f"Write access denied: {subject.text} does not have read access to this dataset."
+        if not read_access:
+            return False, f"Write access denied: {subject.text} does not currently have read access to {target_dataset.text}"
+
+        if len(accessed_cois) > 1:
+            for coi in accessed_cois:
+                accessed_datasets_here = [dataset for dataset in accessed_datasets if dataset.conflict_of_interest == coi]
+                if len(accessed_datasets_here) > 1:
+                    return False, f"Write access denied. {subject.text} has previously accessed data from conflicting datasets"
+
+        return True, f"Write access granted: {subject.text}'s access is confined to a single COI."
 
 
 if __name__ == "__main__":

@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8ab1cba-645f-4af6-a871-b03005cc4e66" name="Changes" comment="Logic implementation commenced">
-      <change beforePath="$PROJECT_DIR$/.idea/CSE440AssignmentOne.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CSE440AssignmentOne.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="b8ab1cba-645f-4af6-a871-b03005cc4e66" name="Changes" comment="Minor fix with validation">
+      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout.kv" beforeDir="false" afterPath="$PROJECT_DIR$/layout.kv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/layout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +119,7 @@
       <workItem from="1742722873804" duration="3791000" />
       <workItem from="1742736506507" duration="2117000" />
       <workItem from="1742750074749" duration="7000" />
-      <workItem from="1742801687639" duration="3752000" />
+      <workItem from="1742801687639" duration="5727000" />
     </task>
     <task id="LOCAL-00001" summary="Adding functionality">
       <option name="closed" value="true" />
@@ -159,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742206798350</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Minor fix with validation">
+      <option name="closed" value="true" />
+      <created>1742805602079</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742805602079</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,9 +183,10 @@
     <MESSAGE value="Progress, yeah yeah" />
     <MESSAGE value="REady to implement logic" />
     <MESSAGE value="Logic implementation commenced" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logic implementation commenced" />
+    <MESSAGE value="Minor fix with validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor fix with validation" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CSE440AssignmentOne$main.coverage" NAME="main Coverage Results" MODIFIED="1742805136919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CSE440AssignmentOne$main.coverage" NAME="main Coverage Results" MODIFIED="1742805794817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
