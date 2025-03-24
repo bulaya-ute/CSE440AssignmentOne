@@ -1,7 +1,7 @@
 import os
 from typing import List, Tuple
 
-os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
+from kivy.core.window import Window
 from kivy.graphics import Color, Line
 from kivymd.uix.card import MDCard
 
@@ -25,12 +25,13 @@ class ChineseWallApp(MDApp):
         super().__init__()
         self.background = None
         self.selected_cards = []
-        self.lines = []
+        self.lines = []  # Store tuples of (line, card1, card2)
         self.all_cards = set()
         self.joins = []
 
     def build_app(self, first=False):
         self.background = BackgroundWidget()
+        Window.bind(on_resize=self.update_lines)  # Bind the resize event
         return self.background
 
     def deselect_all_cards(self):
@@ -81,9 +82,19 @@ class ChineseWallApp(MDApp):
                 card1.center_x, card1.center_y,
                 card2.center_x, card2.center_y
             ], width=2)
-            self.lines.append(line)
+            self.lines.append([line, card1, card2])
         self.deselect_all_cards()
         self.selected_cards.clear()
+
+    def update_lines(self, *args):
+        """Update line positions when window is resized."""
+        for i, (line, card1, card2) in enumerate(self.lines):
+            line.points = [
+                card1.center_x, card1.center_y,
+                card2.center_x, card2.center_y
+            ]
+
+
 
     def remove_line(self, line=None):
         if line:
@@ -91,7 +102,7 @@ class ChineseWallApp(MDApp):
             self.line = None
 
     def clear_lines(self):
-        for line in self.lines:
+        for line, card1, card2 in self.lines:
             self.root.canvas.remove(line)
         self.joins.clear()
 
@@ -115,45 +126,52 @@ class ChineseWallApp(MDApp):
             write_access_label.text_color = "red"
         write_access_label.text = write_access_desc
 
-    def validate_access(self, subject: str, target_dataset: Dataset
+
+    def get_accessed_datasets(self, subject: Subject):
+        existing_pairs = [(subj, dataset) for subj, dataset in self.joins]
+        return [dataset for subj, dataset in existing_pairs if subj == subject]
+
+    def validate_access(self, subject, target_dataset: Dataset
     ) -> Tuple[bool, str]:
         existing_pairs = [(subj, dataset) for subj, dataset in self.joins]
         print(f"Existing pairs: {len(existing_pairs)}")
 
         # Find all datasets the subject already has access to
-        accessed_datasets = [dataset for subj, dataset in existing_pairs if subj == subject]
-        print(f"accessed datasets: {len(accessed_datasets)}")
+        accessed_datasets = self.get_accessed_datasets(subject)
+        print(f"accessed datasets: {len(accessed_datasets)} - {[dataset.text for dataset in accessed_datasets]}")
+
 
         # Collect all COIs the subject has access to
         accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
 
         # --- READ ACCESS CHECK ---
         if len(accessed_cois) == 1 and target_dataset.conflict_of_interest in accessed_cois:
-            return True, "Read access granted: Subject has access only within this COI."
+            return True, f"Read access granted: {subject.text} has access only within this COI."
 
         if len(accessed_cois) == 0:
-            return True, "Read access granted: Subject has no prior dataset access."
+            return True, f"Read access granted: {subject.text} has no prior dataset access."
 
         if target_dataset.conflict_of_interest in accessed_cois:
-            return True, "Read access granted: Subject already has access to this COI."
+            return True, f"Read access granted: {subject.text} already has access to this COI."
 
         return False, "Read access denied: Accessing multiple COIs violates the Chinese Wall Model."
 
     def validate_write_access(
             self,
-            subject: str,
+            subject,
             target_dataset: Dataset
     ) -> Tuple[bool, str]:
         existing_pairs = [(subj.text, dataset) for subj, dataset in self.joins]
-        accessed_datasets = [dataset for subj, dataset in existing_pairs if subj == subject]
+        accessed_datasets = self.get_accessed_datasets(subject)
         accessed_cois = {dataset.conflict_of_interest for dataset in accessed_datasets}
 
+        print(f"target_dataset: {target_dataset.text}, accessed_datasets: {accessed_datasets}")
         if target_dataset in accessed_datasets:
             if len(accessed_cois) == 1:
-                return True, "Write access granted: Subject's access is confined to a single COI."
-            return False, "Write access denied: Subject has accessed multiple COIs."
+                return True, f"Write access granted: {subject.text}'s access is confined to a single COI."
+            return False, f"Write access denied: {subject.text} has accessed multiple COIs."
 
-        return False, "Write access denied: Subject does not have read access to this dataset."
+        return False, f"Write access denied: {subject.text} does not have read access to this dataset."
 
 
 if __name__ == "__main__":

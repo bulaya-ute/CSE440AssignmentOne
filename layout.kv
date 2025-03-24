@@ -1,5 +1,6 @@
 <BackgroundWidget>
     #on_touch_down: app.deselect_all_cards()
+    on_size: app.update_lines()
 
     MDBoxLayout:
         orientation: "vertical"
@@ -88,19 +89,23 @@
 
                     MDLabel:
                         id: read_access_label
+                        adaptive_height: True
+                        pos_hint: {"center_x": 0.5}
                         text: "Read:"
                         size_hint: 1, None
                         height: "50dp"
 
 
                     MDLabel:
+                        adaptive_height: True
+                        pos_hint: {"center_x": 0.5}
                         id: write_access_label
                         text: "Write:"
                         size_hint: 1, None
                         height: "50dp"
 
 
-<ConflictOfInterest>
+<ConflictOfInterest>:
     orientation: "vertical"
     padding: "20dp", "20dp"
     spacing: "20dp"
@@ -117,7 +122,7 @@
 
 
 
-<Row>
+<Row>:
     orientation: "horizontal"
     spacing: "20dp"
     padding: "20dp", "20dp"
@@ -125,9 +130,7 @@
     radius: "10dp"
 
 
-
-
-<Subject>
+<Subject>:
     halign: "center"
     radius: "10dp"
     size_hint: None, None
@@ -140,9 +143,6 @@
         radius: root.radius
         theme_text_color: "Custom"
         text_color: root.color
-
-
-<Dataset@Subject>
 
 
 <Title>:
